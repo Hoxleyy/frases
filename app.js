@@ -4,27 +4,29 @@ import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-
-// Configure o Firebase com suas credenciais
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyD4ofSHCyJq6af4Hq97FksTOfAS-ZjU2BI",
-    authDomain: "frases-40f1b.firebaseapp.com",
-    projectId: "frases-40f1b",
-    storageBucket: "frases-40f1b.appspot.com",
-    messagingSenderId: "432915514955",
-    appId: "1:432915514955:web:6b663356e054bb21a26fce"
+  apiKey: "AIzaSyD4ofSHCyJq6af4Hq97FksTOfAS-ZjU2BI",
+  authDomain: "frases-40f1b.firebaseapp.com",
+  projectId: "frases-40f1b",
+  storageBucket: "frases-40f1b.appspot.com",
+  messagingSenderId: "432915514955",
+  appId: "1:432915514955:web:6b663356e054bb21a26fce",
+  measurementId: "G-301ESYSGTQ"
 };
 
-firebase.initializeApp(firebaseConfig);
-
-const db = firebase.firestore();
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getFirestore(app);
 
 function adicionarFrase() {
     const fraseInput = document.getElementById('frase');
     const novaFrase = fraseInput.value;
 
     if (novaFrase.trim() !== '') {
-        db.collection('frases').add({
+        addDoc(collection(db, 'frases'), {
             texto: novaFrase
         })
         .then(() => {
@@ -42,7 +44,7 @@ function carregarFrases() {
     frasesContainer.innerHTML = '';
 
     // Obtém e exibe as frases do Firestore
-    db.collection('frases').get().then(snapshot => {
+    getDocs(collection(db, 'frases')).then(snapshot => {
         snapshot.forEach(doc => {
             const frase = doc.data().texto;
             const fraseElement = document.createElement('p');
