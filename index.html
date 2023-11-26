@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Frases Curtas</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Frases Curtas</h1>
+        <form id="fraseForm">
+            <label for="frase">Adicione uma frase (máx. 100 caracteres):</label>
+            <input type="text" id="frase" maxlength="100" required>
+            <button type="button" onclick="adicionarFrase()">Adicionar</button>
+        </form>
+        <div id="frasesContainer"></div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
