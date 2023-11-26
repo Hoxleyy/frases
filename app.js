@@ -17,16 +17,16 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app);
+const app = firebase.initializeApp(firebaseConfig);
+const analytics = firebase.analytics();
+const db = firebase.firestore();
 
 function adicionarFrase() {
     const fraseInput = document.getElementById('frase');
     const novaFrase = fraseInput.value;
 
     if (novaFrase.trim() !== '') {
-        addDoc(collection(db, 'frases'), {
+        firebase.firestore().collection('frases').add({
             texto: novaFrase
         })
         .then(() => {
@@ -44,7 +44,7 @@ function carregarFrases() {
     frasesContainer.innerHTML = '';
 
     // Obtém e exibe as frases do Firestore
-    getDocs(collection(db, 'frases')).then(snapshot => {
+    firebase.firestore().collection('frases').get().then(snapshot => {
         snapshot.forEach(doc => {
             const frase = doc.data().texto;
             const fraseElement = document.createElement('p');
@@ -53,6 +53,9 @@ function carregarFrases() {
         });
     });
 }
+
+// Carrega as frases ao carregar a página
+document.addEventListener('DOMContentLoaded', carregarFrases);
 
 // Carrega as frases ao carregar a página
 document.addEventListener('DOMContentLoaded', carregarFrases);
